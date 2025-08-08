@@ -1,5 +1,5 @@
 {
-  "name": "vibe",
+  "name": "nectar",
   "version": "0.1.0",
   "private": true,
   "scripts": {
@@ -58,6 +58,7 @@
     "lucide-react": "^0.518.0",
     "next": "15.3.4",
     "next-themes": "^0.4.6",
+    "prettier": "^3.6.2",
     "prismjs": "^1.30.0",
     "random-word-slugs": "^0.1.7",
     "rate-limiter-flexible": "^7.1.1",
