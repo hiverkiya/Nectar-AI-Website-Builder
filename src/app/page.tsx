@@ -7,16 +7,14 @@ import { useState } from "react";
 import { toast } from "sonner";
 
 const HomePage = () => {
-  const trpc = useTRPC();
-  const invoke = useMutation(
-    trpc.invoke.mutationOptions({
-      onSuccess: () => {
-        toast.success("Build started");
-      },
-    })
-  );
 
-  const [value, setValue] = useState("");
+  const [value,setValue]=useState("")
+  const trpc = useTRPC();
+  const createMessage=useMutation(trpc.messages.create.mutationOptions({
+    onSuccess:()=>{
+      toast.success("Generating build")
+    }
+  }))
   return (
     <div
       className="flex
@@ -30,8 +28,8 @@ const HomePage = () => {
         onChange={(e) => setValue(e.target.value)}
       />
       <Button
-        disabled={invoke.isPending}
-        onClick={() => invoke.mutate({ text: "John" })}
+        disabled={createMessage.isPending}
+        onClick={() => createMessage.mutate({ value:value })}
       >
         Click on me to generate something
       </Button>
