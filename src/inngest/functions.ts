@@ -177,6 +177,7 @@ export const nectarAgentFunction = inngest.createFunction(
       {
         return await prisma.message.create({
           data:{
+            projectId:event.data.projectId, 
             content:"Error occured",
             role:"ASSISTANT",
             type:"ERROR"
@@ -184,7 +185,8 @@ export const nectarAgentFunction = inngest.createFunction(
         })
       }
       return await prisma.message.create({
-        data:{
+        data:{            projectId:event.data.projectId, 
+
           content:result.state.data.summary,
           role:"ASSISTANT",
           type:"RESULT",
