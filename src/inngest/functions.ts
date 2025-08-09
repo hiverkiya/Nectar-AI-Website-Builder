@@ -4,27 +4,47 @@ import {
   createNetwork,
   createTool,
   openai,
+ type  Tool,
 } from "@inngest/agent-kit";
 import { inngest } from "./client";
 import { z } from "zod";
 import { getSandbox, lastAssistantTextMessageContent } from "./utils";
 import { PROMPT } from "@/prompt";
+import { prisma } from "@/lib/database";
 
-export const helloWorld = inngest.createFunction(
-  { id: "hello-world" },
-  { event: "test/hello.world" },
+interface AgentState {
+  summary:string;
+  files:{[path:string]:string};
+}
+
+export const nectarAgentFunction = inngest.createFunction(
+  { id: "nectar-ai-website-builder" },
+  { event: "nectar-ai-agent/run" },
   async ({ event, step }) => {
     const sandboxId = await step.run("get-sandbox-id", async () => {
       const sandbox = await Sandbox.create("nectar-ai-nextjs15"); // Using Antonio's template here, since mine is showing the same output everytime
       return sandbox.sandboxId;
     });
     // You can use gpt-4.1 model OR A LATEST ONE available at https://agentkit.inngest.com/concepts/models, however, that'll exhaust the tokens very fast, keep it for showcasing
-    const codeAgent = createAgent({
+    /*
+    "gpt-4.5-preview"
+  "gpt-4o" 
+"chatgpt-4o-latest"
+"gpt-4o-mini"
+"gpt-4"
+"o1"
+"o1-preview"
+"o1-mini"
+"o3-mini"
+"gpt-4-turbo"
+"gpt-3.5-turbo"
+    */
+    const codeAgent = createAgent<AgentState>({
       name: "nectar-code-agent",
       description: "An expert coding AI agent",
       system: PROMPT,
       model: openai({
-        model: "gpt-4.1",
+        model: "gpt-4o-mini",
         defaultParameters: {
           temperature: 0.1,
         },
@@ -71,7 +91,7 @@ export const helloWorld = inngest.createFunction(
               })
             ),
           }),
-          handler: async ({ files }, { step, network }) => {
+          handler: async ({ files }, { step, network }:Tool.Options<AgentState> ) => {
             /**
              * returns components "/app.tsx":"<p>app page <p>something like this"
              */
@@ -134,7 +154,7 @@ export const helloWorld = inngest.createFunction(
       },
     });
     // We're defining a hard limit for the model to stop
-    const network = createNetwork({
+    const network = createNetwork<AgentState>({
       name: "coding-agent-network",
       agents: [codeAgent],
       maxIter: 15,
@@ -145,12 +165,41 @@ export const helloWorld = inngest.createFunction(
       },
     });
     const result = await network.run(event.data.value);
-
+    const isError= !result.state.data.summary|| Object.keys(result.state.data.files||{}).length===0;
     const sandboxUrl = await step.run("get-sandbox-url", async () => {
       const sandbox = await getSandbox(sandboxId);
       const host = sandbox.getHost(3000);
       return `https://${host}`;
     });
+
+    await step.run("save-result",async()=>{
+      if(isError)
+      {
+        return await prisma.message.create({
+          data:{
+            content:"Error occured",
+            role:"ASSISTANT",
+            type:"ERROR"
+          }
+        })
+      }
+      return await prisma.message.create({
+        data:{
+          content:result.state.data.summary,
+          role:"ASSISTANT",
+          type:"RESULT",
+          fragment:{
+            create:{
+              sandboxUrl,
+              title:"Fragment",
+              files:result.state.data.files
+            }
+          }
+
+        }
+      })
+    })
+
     return {
       url: sandboxUrl,
       title: "Fragment",
