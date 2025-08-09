@@ -68,3 +68,4 @@ Thumbs.db
 # Ignore secrets or API key files (add your specific files here)
 /sandbox-templates/nextjs/.inngest/main.db
 
+.inngest/main.db
