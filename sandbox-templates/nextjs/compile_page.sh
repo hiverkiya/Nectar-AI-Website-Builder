@@ -1,25 +1,20 @@
 #!/bin/bash
 
-# Build the Next.js app
-echo "Building Next.js app..."
-npx next build
+# This script runs during building the sandbox template
+# and makes sure the Next.js app is (1) running and (2) the `/` page is compiled
+function ping_server() {
+	counter=0
+	response=$(curl -s -o /dev/null -w "%{http_code}" "http://localhost:3000")
+	while [[ ${response} -ne 200 ]]; do
+	  let counter++
+	  if  (( counter % 20 == 0 )); then
+        echo "Waiting for server to start..."
+        sleep 0.1
+      fi
 
-# Start the production server in the background
-echo "Starting Next.js server..."
-npx next start &
+	  response=$(curl -s -o /dev/null -w "%{http_code}" "http://localhost:3000")
+	done
+}
 
-# Wait for the server to respond with HTTP 200 on localhost:3000
-counter=0
-while true; do
-  response=$(curl -s -o /dev/null -w "%{http_code}" http://localhost:3000)
-  if [[ "$response" == "200" ]]; then
-    echo "Server is up and running!"
-    break
-  fi
-
-  ((counter++))
-  if (( counter % 20 == 0 )); then
-    echo "Waiting for server to start..."
-  fi
-  sleep 0.5
-done
+ping_server &
+cd /home/user && npx next dev --turbopack

@@ -15,7 +15,7 @@ export const helloWorld = inngest.createFunction(
   { event: "test/hello.world" },
   async ({ event, step }) => {
     const sandboxId = await step.run("get-sandbox-id", async () => {
-      const sandbox = await Sandbox.create("nectar-next-js");
+      const sandbox = await Sandbox.create("nectar-ai-nextjs15"); // Using Antonio's template here, since mine is showing the same output everytime
       return sandbox.sandboxId;
     });
     // You can use gpt-4.1 model OR A LATEST ONE available at https://agentkit.inngest.com/concepts/models, however, that'll exhaust the tokens very fast, keep it for showcasing
@@ -24,7 +24,7 @@ export const helloWorld = inngest.createFunction(
       description: "An expert coding AI agent",
       system: PROMPT,
       model: openai({
-        model: "gpt-4o-mini",
+        model: "gpt-4.1",
         defaultParameters: {
           temperature: 0.1,
         },
