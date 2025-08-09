@@ -69,3 +69,4 @@ Thumbs.db
 /sandbox-templates/nextjs/.inngest/main.db
 
 .inngest/main.db
+src/modules/projects/ui/views/.inngest/main.db
