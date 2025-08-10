@@ -88,10 +88,7 @@ export const ProjectHeader = ({ projectId }: Props) => {
               </DropdownMenuPortal>
             </DropdownMenuSub>
             <DropdownMenuSeparator />
-            <DropdownMenuItem
-              onClick={() => setIsDeleteDialogOpen(true)}
-              className="text-rose-400 focus:bg-rose-200 focus:text-rose-500 dark:focus:bg-pink-700 dark:focus:text-white"
-            >
+            <DropdownMenuItem className="text-rose-400 focus:bg-rose-200 focus:text-rose-500 dark:focus:bg-pink-700 dark:focus:text-white">
               <TrashIcon className="size-4" />
               <span>Delete Project</span>
             </DropdownMenuItem>
