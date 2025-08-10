@@ -1,11 +1,11 @@
 // components/Loader.tsx
-"use client";
+'use client';
 
-import * as React from "react";
+import * as React from 'react';
 
 export default function Loader({ size = 48 }: { size?: number }) {
   return (
-    <div className="flex items-center justify-center w-full h-full">
+    <div className="flex h-full w-full items-center justify-center">
       <div
         className="relative"
         style={{
@@ -14,13 +14,13 @@ export default function Loader({ size = 48 }: { size?: number }) {
         }}
       >
         <span
-          className="absolute inset-0 rounded-full border-4 border-primary border-t-transparent animate-spin"
+          className="border-primary absolute inset-0 animate-spin rounded-full border-4 border-t-transparent"
           style={{
             borderWidth: Math.max(size / 12, 3),
           }}
         />
         <span
-          className="absolute inset-1 rounded-full border-4 border-primary/30 border-t-transparent animate-[spin_1.5s_linear_infinite_reverse]"
+          className="border-primary/30 absolute inset-1 animate-[spin_1.5s_linear_infinite_reverse] rounded-full border-4 border-t-transparent"
           style={{
             borderWidth: Math.max(size / 14, 2),
           }}

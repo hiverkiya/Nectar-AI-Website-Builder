@@ -1,31 +1,38 @@
-"use client"
+'use client';
 
-import { ResizableHandle, ResizablePanel, ResizablePanelGroup } from "@/components/ui/resizable";
+import { ResizableHandle, ResizablePanel, ResizablePanelGroup } from '@/components/ui/resizable';
 
-import MessagesContainer from "../components/MessagesContainer";
-import { Suspense } from "react";
-import Loader from "@/app/projects/[projectId]/Loader";
+import MessagesContainer from '../components/MessagesContainer';
+import { Suspense, useState } from 'react';
+import Loader from '@/app/projects/[projectId]/Loader';
+import { Fragment } from '@/generated/prisma';
+import { ProjectHeader } from '../components/ProjectHeader';
 
 interface Props {
-    projectId:string
+  projectId: string;
 }
-export const ProjectView=({projectId}:Props)=>{
-   
-   
-    return (
-        <div className="h-screen">
-            <ResizablePanelGroup direction="horizontal">
-                <ResizablePanel
-                defaultSize={35}
-                minSize={20}
-                className="flex flex-col min-h-0">
-                  <Suspense fallback={<Loader/>}> <MessagesContainer projectId={projectId}/></Suspense>
-                </ResizablePanel >
-                <ResizableHandle withHandle/>
-                <ResizablePanel defaultSize={65} minSize={50}>
-                  TODO Preview
-                </ResizablePanel>
-            </ResizablePanelGroup>
-        </div>
-    )
-}
+export const ProjectView = ({ projectId }: Props) => {
+  const [activeFragment, setActiveFragment] = useState<Fragment | null>(null);
+
+  return (
+    <div className="h-screen">
+      <ResizablePanelGroup direction="horizontal">
+        <ResizablePanel defaultSize={35} minSize={20} className="flex min-h-0 flex-col">
+          <ProjectHeader projectId={projectId} />
+          <Suspense fallback={<Loader />}>
+            {' '}
+            <MessagesContainer
+              projectId={projectId}
+              activeFragment={activeFragment}
+              setActiveFragment={setActiveFragment}
+            />
+          </Suspense>
+        </ResizablePanel>
+        <ResizableHandle withHandle />
+        <ResizablePanel defaultSize={65} minSize={50}>
+          TODO Preview
+        </ResizablePanel>
+      </ResizablePanelGroup>
+    </div>
+  );
+};
