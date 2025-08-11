@@ -13,8 +13,8 @@ import { Tabs, TabsContent, TabsTrigger, TabsList } from '@/components/ui/tabs';
 import { CodeIcon, CrownIcon, EyeIcon } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import Link from 'next/link';
-import { CodeView } from '../components/CodeView/CodeView';
 import { FileExplorer } from '../components/FileExplorer/FileExplorer';
+import { UserControl } from '../components/UserControl';
 interface Props {
   projectId: string;
 }
@@ -56,12 +56,13 @@ export const ProjectView = ({ projectId }: Props) => {
                 </TabsTrigger>
               </TabsList>
               <div className="mr-1 ml-auto flex items-center gap-x-2">
-                <Button asChild size="sm" variant="default">
+                <Button asChild size="sm" variant="tertiary">
                   <Link href="/pricing">
                     <CrownIcon />
                     Upgrade
                   </Link>
                 </Button>
+                <UserControl />
               </div>
             </div>
             <TabsContent value="preview">
