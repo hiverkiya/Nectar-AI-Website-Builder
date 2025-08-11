@@ -1,15 +1,9 @@
-import React, { useState } from 'react';
+import React from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { useTheme } from 'next-themes';
-import { useMutation, useSuspenseQuery, useQueryClient } from '@tanstack/react-query';
-import {
-  ChevronLeftIcon,
-  ChevronDownIcon,
-  SunMoonIcon,
-  TrashIcon,
-  AlertTriangleIcon,
-} from 'lucide-react';
+import { useSuspenseQuery } from '@tanstack/react-query';
+import { ChevronLeftIcon, ChevronDownIcon, SunMoonIcon, TrashIcon } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import {
   DropdownMenu,
@@ -24,17 +18,8 @@ import {
   DropdownMenuSubTrigger,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
-} from '@/components/ui/dialog';
+
 import { useTRPC } from '@/trpc/client';
-import { toast } from 'sonner';
-import { useRouter } from 'next/navigation';
 
 interface Props {
   projectId: string;

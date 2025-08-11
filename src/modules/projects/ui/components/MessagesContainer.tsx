@@ -23,14 +23,18 @@ const MessagesContainer = ({ projectId, activeFragment, setActiveFragment }: Pro
     )
   );
   const bottomRef = useRef<HTMLDivElement>(null);
-  //   useEffect(() => {
-  //     const lastAssistantMessageWithFragment = messages.findLast(
-  //       (message) => message.role === 'ASSISTANT'
-  //     );
-  //     if (lastAssistantMessageWithFragment) {
-  //       setActiveFragment(lastAssistantMessageWithFragment.fragment);
-  //     }
-  //   }, [messages, setActiveFragment]);
+  const lastAssistantMessageIdRef = useRef<string | null>(null);
+
+  useEffect(() => {
+    const lastAssistantMessage = messages.findLast((message) => message.role === 'ASSISTANT');
+    if (
+      lastAssistantMessage?.fragment &&
+      lastAssistantMessage.id !== lastAssistantMessageIdRef.current
+    ) {
+      setActiveFragment(lastAssistantMessage.fragment);
+      lastAssistantMessageIdRef.current = lastAssistantMessage.id;
+    }
+  }, [messages, setActiveFragment]);
 
   useEffect(() => {
     bottomRef.current?.scrollIntoView();
