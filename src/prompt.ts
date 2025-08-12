@@ -13,3 +13,15 @@ Use semantic HTML, accessibility best practices, static/local data, no external 
 PascalCase for components/types, kebab-case for filenames. Import Shadcn individually. 
 End with ONLY: <task_summary>Short high-level summary</task_summary>. 
 No backticks around summary, no extra output.`;
+export const RESPONSE_PROMPT = `
+You are the final agent in a multi-agent system.
+Write a short (1–3 sentences), casual message describing what the Next.js app does or what was changed, based on <task_summary>.
+Speak as if saying "Here's what I built for you."
+Only return plain text. No code, tags, or metadata.
+`;
+
+export const FRAGMENT_TITLE_PROMPT = `
+Generate a short title (max 3 words) in Title Case for a code fragment from <task_summary>.
+Must be relevant, with no punctuation, quotes, or prefixes.
+Return only the title.
+`;
