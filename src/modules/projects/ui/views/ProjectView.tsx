@@ -15,11 +15,14 @@ import { Button } from '@/components/ui/button';
 import Link from 'next/link';
 import { FileExplorer } from '../components/FileExplorer/FileExplorer';
 import { UserControl } from '../components/UserControl';
+import { useAuth } from '@clerk/nextjs';
 interface Props {
   projectId: string;
 }
 export const ProjectView = ({ projectId }: Props) => {
   const [activeFragment, setActiveFragment] = useState<Fragment | null>(null);
+  const { has } = useAuth();
+  const hasProAccess = has?.({ plan: 'pro' });
   const [tabState, setTabState] = useState<'preview' | 'code'>('preview');
   return (
     <div className="h-screen">
@@ -56,12 +59,14 @@ export const ProjectView = ({ projectId }: Props) => {
                 </TabsTrigger>
               </TabsList>
               <div className="mr-1 ml-auto flex items-center gap-x-2">
-                <Button asChild size="sm" variant="tertiary">
-                  <Link href="/pricing">
-                    <CrownIcon />
-                    Upgrade
-                  </Link>
-                </Button>
+                {!hasProAccess && (
+                  <Button asChild size="sm" variant="tertiary">
+                    <Link href="/pricing">
+                      <CrownIcon />
+                      Upgrade
+                    </Link>
+                  </Button>
+                )}
                 <UserControl />
               </div>
             </div>
