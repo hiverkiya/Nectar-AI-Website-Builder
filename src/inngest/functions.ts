@@ -13,6 +13,7 @@ import { z } from 'zod';
 import { getSandbox, lastAssistantTextMessageContent } from './utils';
 import { FRAGMENT_TITLE_PROMPT, PROMPT, RESPONSE_PROMPT } from '@/prompt';
 import { prisma } from '@/lib/database';
+import { SANDBOX_TIMEOUT } from './types';
 
 interface AgentState {
   summary: string;
@@ -24,7 +25,8 @@ export const nectarAgentFunction = inngest.createFunction(
   { event: 'nectar-ai-agent/run' },
   async ({ event, step }) => {
     const sandboxId = await step.run('get-sandbox-id', async () => {
-      const sandbox = await Sandbox.create('nectar-ai-nextjs15'); // Using Antonio's template here, since mine is showing the same output everytime
+      const sandbox = await Sandbox.create('nectar-ai-nextjs15'); // Using my own template now
+      await sandbox.setTimeout(SANDBOX_TIMEOUT); // Keep the sandbox alive for half an hour
       return sandbox.sandboxId;
     });
     const previousMessages = await step.run('get-previous-messages', async () => {
@@ -36,6 +38,7 @@ export const nectarAgentFunction = inngest.createFunction(
         orderBy: {
           createdAt: 'desc',
         },
+        take: 5,
       });
 
       for (const message of messages) {
@@ -45,7 +48,7 @@ export const nectarAgentFunction = inngest.createFunction(
           content: message.content,
         });
       }
-      return formattedMessages;
+      return formattedMessages.reverse();
     });
 
     const state = createState<AgentState>(
@@ -76,7 +79,7 @@ export const nectarAgentFunction = inngest.createFunction(
       description: 'An expert coding AI agent',
       system: PROMPT,
       model: openai({
-        model: 'gpt-4o-mini',
+        model: 'gpt-4.1',
         defaultParameters: {
           temperature: 0.1,
         },

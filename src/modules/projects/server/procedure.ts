@@ -66,7 +66,7 @@ export const projectsRouter = createTRPCRouter({
         data: {
           userId: ctx.auth.userId,
           name: generateSlug(2, {
-            format: 'camel',
+            format: 'kebab',
           }),
           messages: {
             create: {
