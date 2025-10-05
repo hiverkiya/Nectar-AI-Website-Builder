@@ -70,3 +70,6 @@ Thumbs.db
 
 .inngest/main.db
 src/modules/projects/ui/views/.inngest/main.db
+
+# clerk configuration (can include secrets)
+/.clerk/
