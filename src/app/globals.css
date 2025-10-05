@@ -1,4 +1,4 @@
-@import 'tailwindcss';
+/*@import 'tailwindcss';
 @import 'tw-animate-css';
 
 @custom-variant dark (&:is(.dark *));
@@ -176,7 +176,6 @@
   }
 }
 
-/* Animations */
 @theme inline {
   --animate-first: moveVertical 30s ease infinite;
   --animate-second: moveInCircle 20s reverse infinite;
@@ -219,4 +218,204 @@
       transform: translateY(-50%);
     }
   }
+}*/
+@import 'tailwindcss';
+@import 'tw-animate-css';
+
+@custom-variant dark (&:is(.dark *));
+
+:root {
+    /* 🌤 Light Theme */
+    --background: oklch(0.97 0.02 95);
+    --foreground: oklch(0.28 0.015 100);
+    --card: oklch(0.98 0.015 100);
+    --card-foreground: oklch(0.28 0.015 100);
+    --popover: oklch(1 0 0);
+    --popover-foreground: oklch(0.25 0.02 95);
+
+    /* 🎨 Primary color family – soft red/yellow/blue/green harmony */
+    --primary: oklch(0.78 0.14 25);   /* soft coral red */
+    --primary-foreground: oklch(1 0 0);
+    --secondary: oklch(0.88 0.08 105); /* minty teal */
+    --secondary-foreground: oklch(0.25 0.015 100);
+    --accent: oklch(0.9 0.08 75); /* pastel blue */
+    --accent-foreground: oklch(0.2 0.01 100);
+    --muted: oklch(0.93 0.02 100);
+    --muted-foreground: oklch(0.5 0.02 100);
+    --destructive: oklch(0.6 0.18 25);
+    --destructive-foreground: oklch(1 0 0);
+
+    /* 🌈 Utility colors */
+    --border: oklch(0.9 0.01 100);
+    --input: oklch(0.85 0.015 100);
+    --ring: oklch(0.72 0.15 160);
+    --chart-1: oklch(0.7 0.14 25);
+    --chart-2: oklch(0.7 0.15 140);
+    --chart-3: oklch(0.8 0.12 250);
+    --chart-4: oklch(0.9 0.1 90);
+    --chart-5: oklch(0.75 0.12 330);
+
+    /* 🧭 Sidebar */
+    --sidebar: oklch(0.96 0.02 100);
+    --sidebar-foreground: oklch(0.3 0.02 100);
+    --sidebar-primary: oklch(0.78 0.14 25);
+    --sidebar-primary-foreground: oklch(0.98 0 0);
+    --sidebar-accent: oklch(0.9 0.08 75);
+    --sidebar-accent-foreground: oklch(0.3 0.02 100);
+    --sidebar-border: oklch(0.94 0 0);
+    --sidebar-ring: oklch(0.78 0.05 120);
+
+    /* 🧱 Typography & base */
+    --font-sans:
+            ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
+            'Helvetica Neue', Arial, 'Noto Sans', sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
+            'Segoe UI Symbol', 'Noto Color Emoji';
+    --font-serif: ui-serif, Georgia, Cambria, 'Times New Roman', Times, serif;
+    --font-mono:
+            ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New',
+            monospace;
+
+    /* 🟢 Effects */
+    --radius: 0.5rem;
+    --shadow-xs: 0 1px 2px hsl(0 0% 0% / 0.05);
+    --shadow-sm: 0 1px 3px hsl(0 0% 0% / 0.08);
+    --shadow-md: 0 2px 6px hsl(0 0% 0% / 0.08);
+    --shadow-lg: 0 4px 10px hsl(0 0% 0% / 0.1);
+    --shadow-xl: 0 8px 20px hsl(0 0% 0% / 0.12);
 }
+
+.dark {
+    /* 🌙 Dark Theme */
+    --background: oklch(0.2 0.015 100);
+    --foreground: oklch(0.85 0.02 95);
+    --card: oklch(0.22 0.02 100);
+    --card-foreground: oklch(0.9 0.015 95);
+    --popover: oklch(0.24 0.02 100);
+    --popover-foreground: oklch(0.9 0.02 95);
+
+    --primary: oklch(0.72 0.15 25); /* coral red (softer in dark) */
+    --primary-foreground: oklch(0.98 0 0);
+    --secondary: oklch(0.7 0.12 160); /* teal-green */
+    --secondary-foreground: oklch(0.95 0.02 100);
+    --accent: oklch(0.8 0.1 250); /* cool blue */
+    --accent-foreground: oklch(0.1 0.02 100);
+    --muted: oklch(0.25 0.02 100);
+    --muted-foreground: oklch(0.75 0.02 100);
+    --destructive: oklch(0.55 0.18 25);
+    --destructive-foreground: oklch(1 0 0);
+
+    --border: oklch(0.35 0.02 100);
+    --input: oklch(0.4 0.02 100);
+    --ring: oklch(0.68 0.12 160);
+    --chart-1: oklch(0.6 0.15 25);
+    --chart-2: oklch(0.65 0.14 140);
+    --chart-3: oklch(0.75 0.1 250);
+    --chart-4: oklch(0.7 0.12 90);
+    --chart-5: oklch(0.6 0.1 330);
+
+    --sidebar: oklch(0.18 0.01 100);
+    --sidebar-foreground: oklch(0.85 0.02 95);
+    --sidebar-primary: oklch(0.72 0.15 25);
+    --sidebar-primary-foreground: oklch(0.98 0 0);
+    --sidebar-accent: oklch(0.7 0.12 160);
+    --sidebar-accent-foreground: oklch(0.9 0.02 95);
+    --sidebar-border: oklch(0.3 0 0);
+    --sidebar-ring: oklch(0.68 0.12 160);
+}
+
+@theme inline {
+    --color-background: var(--background);
+    --color-foreground: var(--foreground);
+    --color-card: var(--card);
+    --color-card-foreground: var(--card-foreground);
+    --color-popover: var(--popover);
+    --color-popover-foreground: var(--popover-foreground);
+    --color-primary: var(--primary);
+    --color-primary-foreground: var(--primary-foreground);
+    --color-secondary: var(--secondary);
+    --color-secondary-foreground: var(--secondary-foreground);
+    --color-muted: var(--muted);
+    --color-muted-foreground: var(--muted-foreground);
+    --color-accent: var(--accent);
+    --color-accent-foreground: var(--accent-foreground);
+    --color-destructive: var(--destructive);
+    --color-destructive-foreground: var(--destructive-foreground);
+    --color-border: var(--border);
+    --color-input: var(--input);
+    --color-ring: var(--ring);
+
+    --font-sans: var(--font-sans);
+    --font-mono: var(--font-mono);
+    --font-serif: var(--font-serif);
+
+    --radius-sm: calc(var(--radius) - 4px);
+    --radius-md: calc(var(--radius) - 2px);
+    --radius-lg: var(--radius);
+    --radius-xl: calc(var(--radius) + 4px);
+
+    --shadow-xs: var(--shadow-xs);
+    --shadow-sm: var(--shadow-sm);
+    --shadow-md: var(--shadow-md);
+    --shadow-lg: var(--shadow-lg);
+    --shadow-xl: var(--shadow-xl);
+}
+
+@layer base {
+    * {
+        @apply border-border outline-ring/50;
+    }
+    body {
+        @apply bg-background text-foreground;
+    }
+    button:not([disabled]),
+    [role='button']:not([disabled]) {
+        cursor: pointer;
+    }
+}
+
+/* 🌠 Soft motion-based animations */
+@theme inline {
+    --animate-first: moveVertical 30s ease infinite;
+    --animate-second: moveInCircle 20s reverse infinite;
+    --animate-third: moveInCircle 40s linear infinite;
+    --animate-fourth: moveHorizontal 40s ease infinite;
+    --animate-fifth: moveInCircle 20s ease infinite;
+
+    @keyframes moveHorizontal {
+        0% {
+            transform: translateX(-40%) translateY(-10%);
+        }
+        50% {
+            transform: translateX(40%) translateY(10%);
+        }
+        100% {
+            transform: translateX(-40%) translateY(-10%);
+        }
+    }
+
+    @keyframes moveInCircle {
+        0% {
+            transform: rotate(0deg);
+        }
+        50% {
+            transform: rotate(180deg);
+        }
+        100% {
+            transform: rotate(360deg);
+        }
+    }
+
+    @keyframes moveVertical {
+        0% {
+            transform: translateY(-40%);
+        }
+        50% {
+            transform: translateY(40%);
+        }
+        100% {
+            transform: translateY(-40%);
+        }
+    }
+}
+
+
